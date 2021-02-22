@@ -1,0 +1,34 @@
+{
+  "name": "Next.js-starting-with-clone-coding-todo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/rews7895/Next.js-starting-with-clone-coding-todo.git",
+  "author": "Junseok <yalvz@naver.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "^10.0.6",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "styled-components": "^5.2.1",
+    "styled-reset": "^4.3.4"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.27",
+    "@types/react": "^17.0.1",
+    "@types/styled-components": "^5.1.7",
+    "@typescript-eslint/eslint-plugin": "^4.15.0",
+    "@typescript-eslint/parser": "^4.15.0",
+    "eslint": "^7.19.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "typescript": "^4.1.5"
+  }
+}
