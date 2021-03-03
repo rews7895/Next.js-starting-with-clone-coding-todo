@@ -1,9 +1,12 @@
 import React, { useMemo, useCallback } from "react";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 import palette from "../styles/palette";
 import { TodoType } from "../types/todo";
 import TrashCanIcon from "../public/statics/svg/trash_can.svg";
 import CheckMarkIcon from "../public/statics/svg/check_mark.svg";
+import Data from "../lib/data";
+import { checkTodoAPI } from "../lib/api/todo";
 
 const Container = styled.div`
   width: 100%;
@@ -116,6 +119,7 @@ interface IProps {
 }
 
 const TodoList: React.FC<IProps> = ({ todos }) => {
+  const router = useRouter();
   // useCallback : 함수에 종속성을 줄 수 있음.
   const getTodoColorNums = useCallback(() => {
     let red = 0;
@@ -181,6 +185,16 @@ const TodoList: React.FC<IProps> = ({ todos }) => {
     return colors;
   }, [todos]);
 
+  const checkTodo = async (id: number) => {
+    try {
+      await checkTodoAPI(id);
+      console.log("체크하였습니다.");
+      router.push("/");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <Container>
       <div className="todo-list-header">
@@ -210,11 +224,11 @@ const TodoList: React.FC<IProps> = ({ todos }) => {
               {todo.checked && (
                 <>
                   <TrashCanIcon className="todo-trash-can" onClick={() => {}} />
-                  <CheckMarkIcon className="todo-check-mark" onClick={() => {}} />
+                  <CheckMarkIcon className="todo-check-mark" onClick={() => { checkTodo(todo.id); }} />
                 </>
               )}
               {!todo.checked && (
-                <button type="button" className="todo-button" onClick={() => {}} />
+                <button type="button" className="todo-button" onClick={() => { checkTodo(todo.id); }} />
               )}
             </div>
           </li>
