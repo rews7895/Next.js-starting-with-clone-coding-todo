@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from "react";
+import React, { useMemo, useCallback, useState } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import palette from "../styles/palette";
@@ -120,6 +120,26 @@ interface IProps {
 
 const TodoList: React.FC<IProps> = ({ todos }) => {
   const router = useRouter();
+
+  const [localTodos, setLocalTodos] = useState(todos);
+
+  const checkTodo = async (id: number) => {
+    try {
+      await checkTodoAPI(id);
+      //console.log("체크하였습니다.");
+      //router.push("/");
+      const newTodos = localTodos.map((todo) => {
+        if (todo.id === id) {
+          return { ...todo, checked: !todo.checked };
+        }
+        return todo;
+      });
+      setLocalTodos(newTodos);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   // useCallback : 함수에 종속성을 줄 수 있음.
   const getTodoColorNums = useCallback(() => {
     let red = 0;
@@ -128,7 +148,7 @@ const TodoList: React.FC<IProps> = ({ todos }) => {
     let green = 0;
     let blue = 0;
     let navy = 0;
-    todos.forEach((todo) => {
+    localTodos.forEach((todo) => {
       switch (todo.color) {
         case "red":
           red += 1;
@@ -185,21 +205,11 @@ const TodoList: React.FC<IProps> = ({ todos }) => {
     return colors;
   }, [todos]);
 
-  const checkTodo = async (id: number) => {
-    try {
-      await checkTodoAPI(id);
-      console.log("체크하였습니다.");
-      router.push("/");
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   return (
     <Container>
       <div className="todo-list-header">
         <p className="todo-list-last-go">
-          남은 TODO<span>{todos.length}개</span>
+          남은 TODO<span>{localTodos.length}개</span>
         </p>
         <div className="todo-list-header-colors">
           {/* Object.keys()를 사용하면 객체의 키값들을 배열로 얻을 수 있다. */}
@@ -212,7 +222,7 @@ const TodoList: React.FC<IProps> = ({ todos }) => {
         </div>
       </div>
       <ul className="todo-list">
-        {todos.map((todo) => (
+        {localTodos.map((todo) => (
           <li className="todo-item" key={todo.id}>
             <div className="todo-left-side">
               <div className={`todo-color-block bg-${todo.color}`} />
