@@ -3,7 +3,7 @@ import { NextPage } from "next";
 import AddTodo from "../../components/AddTodo";
 
 const todo: NextPage = () => {
-	return <AddTodo/>;
+  return <AddTodo />;
 };
 
 export default todo;

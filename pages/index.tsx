@@ -20,7 +20,7 @@ interface IProps {
 // 변수 뒤 :은 해당 변수의 타입
 const index: NextPage = ({ todos }) => {
   // return <TodoList todos={todos} />;
-  console.log(process.env.NEXT_PUBLIC_API_URL, "클라이언트");
+  // console.log(process.env.NEXT_PUBLIC_API_URL, "클라이언트");
   return <TodoList todos={todos} />;
 };
 
